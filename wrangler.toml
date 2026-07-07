@@ -1,0 +1,6 @@
+name = "sarcasmstack"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+# Build with: npx @opennextjs/cloudflare
+# Deploy with: wrangler pages deploy .open-next/worker --assets .open-next/assets
