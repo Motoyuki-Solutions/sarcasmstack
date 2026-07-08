@@ -1,96 +1,149 @@
-export const runtime = "edge";
+/**
+ * POST /api/checkout
+ *
+ * Creates a Stripe Checkout Session for the cart and returns its URL.
+ * Request body: { lines: [{ productId, variantId, quantity }] }
+ *
+ * Each Stripe line item carries metadata (productId, variantId, quantity,
+ * printifyProductId, blueprintId, printProviderId) so the webhook can create
+ * the matching Printify order without re-resolving the catalog.
+ *
+ * In mock mode (no STRIPE_SECRET_KEY) it returns a clear demo payload.
+ */
 
 import { NextRequest, NextResponse } from "next/server";
+import type Stripe from "stripe";
+import { getProduct, getProductVariant } from "@/data/catalog";
+import { getStripe, stripeEnabled, appOrigin } from "@/lib/stripe";
+import { isMockMode } from "@/lib/printify";
 
-interface CheckoutBody {
-  productId: number;
-  variantId: number;
+export const runtime = "nodejs"; // Stripe SDK needs the Node runtime, not edge
+
+interface IncomingLine {
+  productId: string;
+  variantId: string;
   quantity: number;
-  shippingAddress: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    phone: string;
-    country: string;
-    region: string;
-    address1: string;
-    address2?: string;
-    city: string;
-    zip: string;
-  };
 }
 
-export async function POST(request: NextRequest) {
-  const apiKey = process.env.PRINTIFY_API_KEY;
-  const shopId = process.env.PRINTIFY_SHOP_ID;
-
-  let body: CheckoutBody;
+export async function POST(req: NextRequest) {
+  let body: { lines?: IncomingLine[] };
   try {
-    body = await request.json();
+    body = await req.json();
   } catch {
-    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+    return NextResponse.json({ error: "invalid json" }, { status: 400 });
   }
 
-  if (!body.productId || !body.variantId || !body.shippingAddress) {
+  const lines = body?.lines;
+  if (!Array.isArray(lines) || lines.length === 0) {
+    return NextResponse.json({ error: "lines must be a non-empty array" }, { status: 400 });
+  }
+
+  // Resolve + validate every line against the catalog.
+  type Resolved = {
+    productId: string;
+    variantId: string;
+    quantity: number;
+    title: string;
+    label: string;
+    priceCents: number;
+    printifyProductId: string;
+    blueprintId: number;
+    printProviderId: number;
+  };
+  const resolved: Resolved[] = [];
+  for (const l of lines) {
+    const product = getProduct(l.productId);
+    if (!product) {
+      return NextResponse.json({ error: `unknown product: ${l.productId}` }, { status: 400 });
+    }
+    const variant = getProductVariant(product, l.variantId);
+    if (!variant) {
+      return NextResponse.json(
+        { error: `unknown variant ${l.variantId} for ${l.productId}` },
+        { status: 400 },
+      );
+    }
+    const qty = Math.max(1, Math.floor(l.quantity));
+    resolved.push({
+      productId: product.id,
+      variantId: variant.id,
+      quantity: qty,
+      title: product.title,
+      label: variant.label,
+      priceCents: variant.priceCents,
+      printifyProductId: product.printifyProductId,
+      blueprintId: product.blueprintId,
+      printProviderId: product.printProviderId,
+    });
+  }
+
+  // Mock mode: no Stripe key. Return a demo payload so the UI degrades cleanly.
+  if (!stripeEnabled() || isMockMode()) {
+    const subtotal = resolved.reduce((s, r) => s + r.priceCents * r.quantity, 0);
+    return NextResponse.json({
+      mock: true,
+      url: null,
+      message: "Mock mode — set STRIPE_SECRET_KEY to enable real checkout.",
+      subtotal,
+      lineCount: resolved.length,
+    });
+  }
+
+  const origin = appOrigin();
+  const stripe = getStripe();
+
+  const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = resolved.map((r) => ({
+    quantity: r.quantity,
+    price_data: {
+      currency: "usd",
+      unit_amount: r.priceCents,
+      product_data: {
+        name: `${r.title} (${r.label})`,
+        // SarcasmStack-branded statement descriptor handled at session level.
+        metadata: {
+          productId: r.productId,
+          variantId: r.variantId,
+          printifyProductId: r.printifyProductId,
+          blueprintId: String(r.blueprintId),
+          printProviderId: String(r.printProviderId),
+        },
+      },
+    },
+  }));
+
+  try {
+    const session = await stripe.checkout.sessions.create({
+      mode: "payment",
+      line_items: lineItems,
+      success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/cart?canceled=1`,
+      // Stash the whole cart as session metadata too, for resilient webhook handling.
+      metadata: {
+        cart: JSON.stringify(
+          resolved.map((r) => ({
+            productId: r.productId,
+            variantId: r.variantId,
+            quantity: r.quantity,
+            printifyProductId: r.printifyProductId,
+            blueprintId: r.blueprintId,
+            printProviderId: r.printProviderId,
+          })),
+        ),
+      },
+      shipping_address_collection: { allowed_countries: ["US", "CA", "GB", "AU", "DE", "FR"] },
+      phone_number_collection: { enabled: true },
+      payment_intent_data: {
+        // Carry cart through to the payment intent for webhook reconciliation.
+        metadata: { cart_items: String(resolved.length) },
+      },
+    });
+
+    return NextResponse.json({ url: session.url, sessionId: session.id });
+  } catch (err) {
+    console.error("[checkout] stripe session create failed:", err);
     return NextResponse.json(
-      { error: "Missing required fields: productId, variantId, shippingAddress" },
-      { status: 400 }
+      { error: "could not create checkout session" },
+      { status: 500 },
     );
   }
-
-  if (apiKey && shopId) {
-    try {
-      const orderPayload = {
-        line_items: [
-          {
-            product_id: body.productId,
-            variant_id: body.variantId,
-            quantity: body.quantity || 1,
-          },
-        ],
-        shipping_address: {
-          first_name: body.shippingAddress.firstName,
-          last_name: body.shippingAddress.lastName,
-          email: body.shippingAddress.email,
-          phone: body.shippingAddress.phone,
-          country: body.shippingAddress.country,
-          region: body.shippingAddress.region,
-          address1: body.shippingAddress.address1,
-          address2: body.shippingAddress.address2 || "",
-          city: body.shippingAddress.city,
-          zip: body.shippingAddress.zip,
-        },
-      };
-
-      const res = await fetch(
-        "https://api.printify.com/v1/shops/" + shopId + "/orders.json",
-        {
-          method: "POST",
-          headers: {
-            Authorization: "Bearer " + apiKey,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(orderPayload),
-        }
-      );
-
-      if (!res.ok) {
-        const errorBody = await res.text();
-        throw new Error("Printify order failed: " + res.status + " " + errorBody);
-      }
-
-      const order = await res.json();
-      return NextResponse.json({ success: true, orderId: order.id, source: "printify" });
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Unknown error";
-      return NextResponse.json({ error: message }, { status: 502 });
-    }
-  }
-
-  return NextResponse.json({
-    success: true,
-    orderId: "mock-order-" + Date.now(),
-    source: "mock",
-    message: "Order simulated (no PRINTIFY_API_KEY set)",
-  });
 }

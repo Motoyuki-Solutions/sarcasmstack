@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="4500" height="2100" viewBox="0 0 4500 2100" aria-label="[ production outage screenshot ]
+SEV-1 · 03:14 · all services degraded
+on-call: crying">
+  
+  <text x="2250" y="897.1" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="180" fill="#ffffff" text-anchor="middle" >[ production outage screenshot</text>
+      <text x="2250" y="1109.5" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="180" fill="#ffffff" text-anchor="middle" >] SEV-1 · 03:14 · all services</text>
+      <text x="2250" y="1321.9" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="180" fill="#ffffff" text-anchor="middle" >degraded on-call: crying</text>
+</svg>

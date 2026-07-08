@@ -1,0 +1,9 @@
+// Fallback wrangler config for the legacy @cloudflare/next-on-pages path.
+// The primary deployment path is @opennextjs/cloudflare (see wrangler.jsonc).
+// Keep this for projects that prefer the Pages + edge-runtime route.
+{
+  "name": "sarcasmstack",
+  "compatibility_date": "2024-09-23",
+  "compatibility_flags": ["nodejs_compat"],
+  "pages_build_output_dir": ".vercel/output/static"
+}

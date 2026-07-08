@@ -1,10 +1,44 @@
 import type { Metadata } from "next";
+import { Inter, Anton } from "next/font/google";
 import "./globals.css";
+import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
+import { CartProvider } from "@/components/cart-context";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const anton = Anton({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "SarcasmStack — Wear the Attitude",
+  metadataBase: new URL("https://sarcasmstack.io"),
+  title: {
+    default: "SarcasmStack — Wearable Snark, Print on Demand",
+    template: "%s · SarcasmStack",
+  },
   description:
-    "A satirical print-on-demand store. Bold designs. Zero chill.",
+    "Print-on-demand apparel, drinkware, and stickers for people whose love language is sarcasm. Designed by the chronically online.",
+  keywords: ["sarcasm", "funny shirts", "humor", "print on demand", "mugs", "stickers"],
+  openGraph: {
+    title: "SarcasmStack — Wearable Snark, Print on Demand",
+    description: "Print-on-demand apparel and gear for the chronically sarcastic.",
+    url: "https://sarcasmstack.io",
+    siteName: "SarcasmStack",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SarcasmStack",
+    description: "Wearable snark, print on demand.",
+  },
 };
 
 export default function RootLayout({
@@ -13,36 +47,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className="min-h-screen bg-neutral-950 text-neutral-100 antialiased">
-        <header className="border-b border-neutral-800">
-          <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-            <a href="/" className="text-xl font-bold tracking-tight text-brand-400">
-              SarcasmStack
-            </a>
-            <ul className="flex gap-6 text-sm text-neutral-400">
-              <li>
-                <a href="/shop" className="hover:text-white transition-colors">
-                  Shop
-                </a>
-              </li>
-              <li>
-                <a href="/about" className="hover:text-white transition-colors">
-                  About
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </header>
-
-        <main>{children}</main>
-
-        <footer className="border-t border-neutral-800 mt-20">
-          <div className="mx-auto max-w-7xl px-6 py-8 text-center text-xs text-neutral-600">
-            &copy; {new Date().getFullYear()} SarcasmStack. All rights reserved.
-            Powered by Printify.
-          </div>
-        </footer>
+    <html lang="en" className={`${inter.variable} ${anton.variable} dark`}>
+      <body className="min-h-screen bg-ink-950 font-sans text-zinc-100 antialiased">
+        <CartProvider>
+          <SiteHeader />
+          <main className="min-h-[calc(100vh-64px)]">{children}</main>
+          <SiteFooter />
+        </CartProvider>
       </body>
     </html>
   );

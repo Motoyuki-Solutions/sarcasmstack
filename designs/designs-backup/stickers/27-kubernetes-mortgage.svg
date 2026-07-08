@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3000" height="3000" viewBox="0 0 3000 3000" aria-label="My Other Car Is A Kubernetes Cluster That Costs More Than My Mortgage">
+  
+  <text x="1500" y="931.7" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="280" fill="#ffffff" text-anchor="middle" >My Other Car Is</text>
+      <text x="1500" y="1262.1" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="280" fill="#ffffff" text-anchor="middle" >A Kubernetes</text>
+      <text x="1500" y="1592.5" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="280" fill="#ffffff" text-anchor="middle" >Cluster That</text>
+      <text x="1500" y="1922.9" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="280" fill="#ffffff" text-anchor="middle" >Costs More Than</text>
+      <text x="1500" y="2253.3" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="280" fill="#ffffff" text-anchor="middle" >My Mortgage</text>
+</svg>

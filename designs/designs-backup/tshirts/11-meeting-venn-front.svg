@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="4500" height="5400" viewBox="0 0 4500 5400" aria-label="Meeting Venn diagram">
+  
+  
+    <g opacity="0.9">
+      <circle cx="1150" cy="2500" r="1500" fill="none" stroke="#ffffff" stroke-width="14"/>
+      <circle cx="3350" cy="2500" r="1500" fill="none" stroke="#ff5a1f" stroke-width="14"/>
+    </g>
+    <text x="1150" y="2261.1" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="150" fill="#ffffff" text-anchor="middle" >MEETINGS
+I COULD</text>
+      <text x="1150" y="2438.1" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="150" fill="#ffffff" text-anchor="middle" >HAVE
+SKIPPED</text>
+    <text x="3350" y="2261.1" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="150" fill="#ff5a1f" text-anchor="middle" >MEETINGS
+ABOUT</text>
+      <text x="3350" y="2438.1" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="150" fill="#ff5a1f" text-anchor="middle" >THE
+MEETINGS</text>
+    <text x="2250" y="3746.1" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="200" fill="#ffffff" text-anchor="middle" >ALL OF THEM</text>
+  
+</svg>

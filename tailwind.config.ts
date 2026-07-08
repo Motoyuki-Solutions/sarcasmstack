@@ -2,35 +2,43 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       colors: {
-        brand: {
-          50: "#fdf4ff",
-          100: "#fae8ff",
-          200: "#f5d0fe",
-          300: "#f0abfc",
-          400: "#e879f9",
-          500: "#d946ef",
-          600: "#c026d3",
-          700: "#a21caf",
-          800: "#86198f",
-          900: "#701a75",
-          950: "#4a044e",
+        // SarcasmStack dark brand palette
+        ink: {
+          950: "#0a0a0b",
+          900: "#111113",
+          800: "#18181b",
+          700: "#232327",
+          600: "#2f2f35",
+        },
+        accent: {
+          // hot magenta-red — the sarcastic pop
+          DEFAULT: "#ff3b6b",
+          soft: "#ff6b8a",
+          dim: "#c92a52",
+        },
+        highlight: {
+          // acid yellow for warnings/CTA hover
+          DEFAULT: "#facc15",
         },
       },
-      animation: {
-        marquee: "marquee 25s linear infinite",
+      fontFamily: {
+        display: ["var(--font-display)", "system-ui", "sans-serif"],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       keyframes: {
         marquee: {
-          "0%": { transform: "translateX(0%)" },
+          "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
         },
+      },
+      animation: {
+        marquee: "marquee 30s linear infinite",
       },
     },
   },

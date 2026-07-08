@@ -1,150 +1,251 @@
 /**
- * Printify API Client
+ * Printify REST API client.
  *
- * IPrintifyClient defines the contract. Two implementations:
- *   - PrintifyClient: live API calls with Bearer auth
- *   - MockPrintifyClient: returns sample data for local dev
+ * Wraps the endpoints documented at https://developers.printify.com/ that the
+ * SarcasmStack storefront needs:
  *
- * The default export auto-selects based on PRINTIFY_API_KEY.
+ *   Shops:
+ *     GET /v1/shops.json
+ *
+ *   Catalog (read-only product catalog of *types* Printify can print):
+ *     GET /v1/catalog/blueprints.json
+ *     GET /v1/catalog/blueprints/{id}.json
+ *     GET /v1/catalog/blueprints/{id}/print_providers.json
+ *     GET /v1/catalog/blueprints/{id}/print_providers/{pid}/variants.json
+ *     GET /v1/catalog/blueprints/{id}/print_providers/{pid}/shipping.json
+ *
+ *   Shop products (products created in *this* shop):
+ *     GET    /v1/shops/{shop_id}/products.json
+ *     POST   /v1/shops/{shop_id}/products.json            (create)
+ *     POST   /v1/shops/{shop_id}/products/{pid}/publish.json (publish — separate step!)
+ *
+ *   Orders:
+ *     GET  /v1/shops/{shop_id}/orders.json
+ *     POST /v1/shops/{shop_id}/orders.json                (create order on checkout)
+ *
+ *   Uploads:
+ *     POST /v1/uploads.json                               (push a design image)
+ *
+ * Auth: Personal Access Token sent as `Authorization: Bearer <token>`.
+ *
+ * NOTE on the brief: the brief references `GET /v1/catalog/products`, but the
+ * real endpoint is `GET /v1/catalog/blueprints.json` (a "blueprint" is a
+ * product *type*). The client uses the correct endpoint.
  */
 
-export interface PrintifyBlueprint {
-  id: number;
-  title: string;
-  description: string;
-  brand: string;
-  model: string;
-  images: string[];
-}
+import type {
+  PrintifyBlueprint,
+  PrintifyCreateOrderPayload,
+  PrintifyCreateProductPayload,
+  PrintifyOrder,
+  PrintifyPrintProvider,
+  PrintifyProduct,
+  PrintifyShop,
+  PrintifyShippingInfo,
+  PrintifyUpload,
+  PrintifyUploadRequest,
+  PrintifyVariant,
+} from "./types";
+import type { IPrintifyClient } from "./interface";
 
-export interface PrintifyProvider {
-  id: number;
-  title: string;
-  variants: {
-    id: number;
-    title: string;
-    options: { color: string; size: string; price: number; is_enabled: boolean }[];
-  }[];
-}
+const PRINTIFY_BASE = "https://api.printify.com/v1";
 
-export interface PrintifyOrderPayload {
-  line_items: {
-    product_id: number;
-    variant_id: number;
-    quantity: number;
-  }[];
-  shipping_address: {
-    first_name: string;
-    last_name: string;
-    email: string;
-    phone: string;
-    country: string;
-    region: string;
-    address1: string;
-    address2?: string;
-    city: string;
-    zip: string;
-  };
-}
-
-export interface PrintifyOrderResponse {
-  id: string;
-  status: string;
-}
-
-export interface IPrintifyClient {
-  getBlueprints(): Promise<PrintifyBlueprint[]>;
-  getProviders(blueprintId: number): Promise<PrintifyProvider[]>;
-  createProduct(shopId: string, data: Record<string, unknown>): Promise<{ id: string }>;
-  createOrder(shopId: string, order: PrintifyOrderPayload): Promise<PrintifyOrderResponse>;
-}
-
-class PrintifyClient implements IPrintifyClient {
-  private baseUrl = "https://api.printify.com/v1";
-  private token: string;
-
-  constructor(token: string) {
-    this.token = token;
+export class PrintifyError extends Error {
+  constructor(
+    message: string,
+    public readonly status: number,
+    public readonly body: unknown,
+  ) {
+    super(message);
+    this.name = "PrintifyError";
   }
+}
 
-  private async request<T>(path: string, init?: RequestInit): Promise<T> {
-    const authHeader = String.fromCharCode(66,101,97,114,101,114) + " " + this.token;
-    const res = await fetch(this.baseUrl + path, {
-      ...init,
-      headers: {
-        Authorization: authHeader,
-        "Content-Type": "application/json",
-        ...init?.headers,
-      },
-    });
-    if (!res.ok) {
-      const body = await res.text().catch(() => "");
-      throw new Error("Printify API " + path + " -> " + res.status + ": " + body);
+export interface PrintifyClientOptions {
+  apiKey: string;
+  shopId?: string;
+  /** Override base URL (testing). */
+  baseUrl?: string;
+  /** Fetch implementation (testing / edge injection). */
+  fetchImpl?: typeof fetch;
+}
+
+export class PrintifyClient implements IPrintifyClient {
+  private readonly apiKey: string;
+  private readonly shopId?: string;
+  private readonly baseUrl: string;
+  private readonly fetchImpl: typeof fetch;
+
+  constructor(options: PrintifyClientOptions) {
+    if (!options.apiKey) {
+      throw new PrintifyError("PrintifyClient requires an apiKey", 0, null);
     }
-    return res.json() as Promise<T>;
+    this.apiKey = options.apiKey;
+    this.shopId = options.shopId;
+    this.baseUrl = options.baseUrl ?? PRINTIFY_BASE;
+    this.fetchImpl = options.fetchImpl ?? fetch;
   }
 
-  getBlueprints(): Promise<PrintifyBlueprint[]> {
-    return this.request("/catalog/blueprints.json");
+  /* -------------------------------------------------------------- */
+  /* Internal request helper                                        */
+  /* -------------------------------------------------------------- */
+
+  private async request<T>(
+    path: string,
+    init: RequestInit = {},
+  ): Promise<T> {
+    const url = `${this.baseUrl}${path}`;
+    const headers: Record<string, string> = {
+      Authorization: `Bearer ${this.apiKey}`,
+      "Content-Type": "application/json",
+      ...(init.headers as Record<string, string> | undefined),
+    };
+
+    const res = await this.fetchImpl(url, { ...init, headers });
+
+    if (!res.ok) {
+      let body: unknown = null;
+      try {
+        body = await res.json();
+      } catch {
+        try {
+          body = await res.text();
+        } catch {
+          /* ignore */
+        }
+      }
+      throw new PrintifyError(
+        `Printify API ${init.method ?? "GET"} ${path} failed: ${res.status} ${res.statusText}`,
+        res.status,
+        body,
+      );
+    }
+
+    // Some endpoints (publish) return 200 with empty body.
+    if (res.status === 204) return undefined as T;
+    const text = await res.text();
+    if (!text) return undefined as T;
+    try {
+      return JSON.parse(text) as T;
+    } catch {
+      return text as unknown as T;
+    }
   }
 
-  getProviders(blueprintId: number): Promise<PrintifyProvider[]> {
-    return this.request("/catalog/blueprints/" + blueprintId + "/providers.json");
+  private requireShopId(): string {
+    if (!this.shopId) {
+      throw new PrintifyError(
+        "This call requires a shopId. Set PRINTIFY_SHOP_ID or pass shopId to the client.",
+        0,
+        null,
+      );
+    }
+    return this.shopId;
   }
 
-  createProduct(shopId: string, data: Record<string, unknown>): Promise<{ id: string }> {
-    return this.request("/shops/" + shopId + "/products.json", {
+  /* -------------------------------------------------------------- */
+  /* Shops                                                          */
+  /* -------------------------------------------------------------- */
+
+  /** List shops available to this token. Use this to discover your shopId. */
+  listShops(): Promise<PrintifyShop[]> {
+    return this.request<PrintifyShop[]>("/shops.json");
+  }
+
+  /* -------------------------------------------------------------- */
+  /* Catalog (read-only blueprints / providers / variants)          */
+  /* -------------------------------------------------------------- */
+
+  listBlueprints(): Promise<PrintifyBlueprint[]> {
+    return this.request<PrintifyBlueprint[]>("/catalog/blueprints.json");
+  }
+
+  getBlueprint(blueprintId: number): Promise<PrintifyBlueprint> {
+    return this.request<PrintifyBlueprint>(
+      `/catalog/blueprints/${blueprintId}.json`,
+    );
+  }
+
+  listBlueprintProviders(blueprintId: number): Promise<PrintifyPrintProvider[]> {
+    return this.request<PrintifyPrintProvider[]>(
+      `/catalog/blueprints/${blueprintId}/print_providers.json`,
+    );
+  }
+
+  listVariants(
+    blueprintId: number,
+    printProviderId: number,
+  ): Promise<PrintifyVariant[]> {
+    return this.request<PrintifyVariant[]>(
+      `/catalog/blueprints/${blueprintId}/print_providers/${printProviderId}/variants.json`,
+    );
+  }
+
+  getShippingInfo(
+    blueprintId: number,
+    printProviderId: number,
+  ): Promise<PrintifyShippingInfo> {
+    return this.request<PrintifyShippingInfo>(
+      `/catalog/blueprints/${blueprintId}/print_providers/${printProviderId}/shipping.json`,
+    );
+  }
+
+  /* -------------------------------------------------------------- */
+  /* Shop products                                                  */
+  /* -------------------------------------------------------------- */
+
+  listProducts(): Promise<PrintifyProduct[]> {
+    return this.request<PrintifyProduct[]>(
+      `/shops/${this.requireShopId()}/products.json`,
+    );
+  }
+
+  /** Create a product in the shop. Remember: creation does NOT publish it. */
+  createProduct(payload: PrintifyCreateProductPayload): Promise<PrintifyProduct> {
+    return this.request<PrintifyProduct>(
+      `/shops/${this.requireShopId()}/products.json`,
+      { method: "POST", body: JSON.stringify(payload) },
+    );
+  }
+
+  /**
+   * Publish a previously-created product so it appears in connected sales
+   * channels. Must be called AFTER createProduct.
+   */
+  publishProduct(productId: string): Promise<void> {
+    return this.request<void>(
+      `/shops/${this.requireShopId()}/products/${productId}/publish.json`,
+      { method: "POST", body: JSON.stringify({}) },
+    );
+  }
+
+  /* -------------------------------------------------------------- */
+  /* Orders                                                         */
+  /* -------------------------------------------------------------- */
+
+  listOrders(): Promise<PrintifyOrder[]> {
+    return this.request<PrintifyOrder[]>(
+      `/shops/${this.requireShopId()}/orders.json`,
+    );
+  }
+
+  /** Submit an order to Printify for fulfilment (custom checkout flow). */
+  createOrder(payload: PrintifyCreateOrderPayload): Promise<PrintifyOrder> {
+    return this.request<PrintifyOrder>(
+      `/shops/${this.requireShopId()}/orders.json`,
+      { method: "POST", body: JSON.stringify(payload) },
+    );
+  }
+
+  /* -------------------------------------------------------------- */
+  /* Uploads (design images)                                        */
+  /* -------------------------------------------------------------- */
+
+  /** Upload a design image (by URL) to the merchant's media library. */
+  upload(payload: PrintifyUploadRequest): Promise<PrintifyUpload> {
+    return this.request<PrintifyUpload>("/uploads.json", {
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
     });
   }
-
-  createOrder(shopId: string, order: PrintifyOrderPayload): Promise<PrintifyOrderResponse> {
-    return this.request("/shops/" + shopId + "/orders.json", {
-      method: "POST",
-      body: JSON.stringify(order),
-    });
-  }
 }
-
-export class MockPrintifyClient implements IPrintifyClient {
-  async getBlueprints(): Promise<PrintifyBlueprint[]> {
-    return [
-      { id: 1, title: "Unisex Heavy Blend Crewneck Sweatshirt", description: "A cozy crewneck sweatshirt perfect for chilly days.", brand: "Gildan", model: "18000", images: [] },
-      { id: 2, title: "Unisex Jersey Short Sleeve Tee", description: "A soft, lightweight jersey tee with a classic fit.", brand: "Bella+Canvas", model: "3001", images: [] },
-      { id: 3, title: "All-Over Print Mug", description: "Start your morning with a custom 11oz ceramic mug.", brand: "Generic", model: "Ceramic Mug", images: [] },
-    ];
-  }
-
-  async getProviders(_blueprintId: number): Promise<PrintifyProvider[]> {
-    return [
-      {
-        id: 1, title: "Printify",
-        variants: [
-          { id: 100, title: "S / Black", options: [{ color: "Black", size: "S", price: 2999, is_enabled: true }] },
-          { id: 101, title: "M / Black", options: [{ color: "Black", size: "M", price: 2999, is_enabled: true }] },
-          { id: 102, title: "L / White", options: [{ color: "White", size: "L", price: 2999, is_enabled: true }] },
-        ],
-      },
-    ];
-  }
-
-  async createProduct(_shopId: string, _data: Record<string, unknown>): Promise<{ id: string }> {
-    return { id: "mock-product-" + Date.now() };
-  }
-
-  async createOrder(_shopId: string, _order: PrintifyOrderPayload): Promise<PrintifyOrderResponse> {
-    return { id: "mock-order-" + Date.now(), status: "pending" };
-  }
-}
-
-function createClient(): IPrintifyClient {
-  const key = process.env.PRINTIFY_API_KEY;
-  if (key) return new PrintifyClient(key);
-  console.warn("[Printify] No PRINTIFY_API_KEY set - using MockPrintifyClient");
-  return new MockPrintifyClient();
-}
-
-const printify: IPrintifyClient = createClient();
-export { printify };
-export default printify;

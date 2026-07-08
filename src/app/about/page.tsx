@@ -1,40 +1,60 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "The Bit",
+  description: "What SarcasmStack is and why it exists.",
+};
+
 export default function AboutPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-20">
-      <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-brand-400 to-pink-400 bg-clip-text text-transparent">
-        About SarcasmStack
+    <div className="mx-auto max-w-3xl px-4 py-20 sm:px-6 lg:px-8">
+      <span className="text-xs font-bold uppercase tracking-widest text-accent">
+        The Bit
+      </span>
+      <h1 className="mt-3 font-display text-5xl leading-tight tracking-tight text-white sm:text-6xl">
+        WE&apos;RE NOT
+        <br />
+        THAT DEEP.
       </h1>
 
-      <div className="space-y-6 text-neutral-400 leading-relaxed">
+      <div className="prose-invert mt-10 space-y-6 text-lg leading-relaxed text-zinc-300">
         <p>
-          SarcasmStack was born from a simple observation: the world needs more honesty
-          printed on comfortable clothing. We are a team of developers, designers, and
-          professional cynics who believe that what you wear should say what you are
-          actually thinking.
+          SarcasmStack is a print-on-demand store for people who communicate
+          primarily through irony. You think it, we print it on a shirt, and
+          then you wear it to the grocery store like a normal person.
         </p>
-
         <p>
-          Every design starts as a joke in a Slack channel at 2 AM. If it still makes us
-          laugh the next morning (and passes the would I actually wear this test),
-          it goes into production. Quality humor deserves quality fabric.
+          There&apos;s no warehouse. There&apos;s no inventory. There&apos;s a
+          stack of sarcastic designs and a network of print providers who make
+          your order the moment you click buy. That&apos;s the whole operation.
         </p>
-
-        <h2 className="text-2xl font-bold text-white pt-4">How It Works</h2>
-
-        <p>
-          We use Printify for print-on-demand, which means every item is made to order.
-          No warehouses full of unsold existential dread - just fresh prints, shipped
-          directly to your door. It is better for the planet and better for our anxiety.
+        <p className="text-zinc-400">
+          Every design is survivorship-biased through exactly one filter: does
+          it make us exhale slightly harder than usual through our nose. If yes,
+          it ships. If no, we think about it for too long and ship it anyway.
         </p>
+      </div>
 
-        <h2 className="text-2xl font-bold text-white pt-4">Our Promise</h2>
-
-        <ul className="list-disc list-inside space-y-2">
-          <li>Premium materials that survive more than one wash cycle</li>
-          <li>Designs that make strangers smile (or roll their eyes, which is also valid)</li>
-          <li>Carbon-neutral shipping because even sarcasm should be sustainable</li>
-          <li>30-day returns if the humor does not land</li>
+      <div className="mt-12 rounded-xl border border-white/10 bg-ink-900 p-8">
+        <h2 className="font-display text-2xl tracking-wide text-white">
+          THE BORING PART
+        </h2>
+        <ul className="mt-4 space-y-3 text-sm text-zinc-400">
+          <li>• Products are printed and shipped by Printify&apos;s partner network.</li>
+          <li>• Orders are made-to-order — typically shipped within 3–7 business days.</li>
+          <li>• Shipping is calculated at checkout based on your location.</li>
+          <li>• If something arrives broken or misprinted, we&apos;ll fix it. Sarcasm, not malice.</li>
         </ul>
+      </div>
+
+      <div className="mt-12">
+        <Link
+          href="/shop"
+          className="inline-flex items-center gap-2 rounded-lg bg-accent px-8 py-4 font-display text-lg tracking-wide text-ink-950 transition-all hover:bg-accent-soft"
+        >
+          OK, SHOW ME THE GOODS →
+        </Link>
       </div>
     </div>
   );

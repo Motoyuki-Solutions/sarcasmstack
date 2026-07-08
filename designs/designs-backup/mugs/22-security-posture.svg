@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="4500" height="2100" viewBox="0 0 4500 2100" aria-label="Security posture limbo">
+  
+  
+    <line x1="1350" y1="400" x2="3150" y2="800" stroke="#ff5a1f" stroke-width="20"/>
+    <line x1="1350" y1="400" x2="1350" y2="1600" stroke="#ffffff" stroke-width="12"/>
+    <line x1="3150" y1="800" x2="3150" y2="1600" stroke="#ffffff" stroke-width="12"/>
+    <g transform="translate(2250 1500)" stroke="#ffffff" stroke-width="14" fill="none">
+      <line x1="0" y1="0" x2="0" y2="-360"/>
+      <circle cx="0" cy="-440" r="60" fill="#ffffff" stroke="none"/>
+      <line x1="0" y1="-200" x2="220" y2="-80"/>
+      <line x1="0" y1="-200" x2="-220" y2="-80"/>
+      <line x1="0" y1="-60" x2="160" y2="320"/>
+      <line x1="0" y1="-60" x2="-160" y2="320" transform="rotate(-35 0 -60)"/>
+    </g>
+    <text x="2250" y="366.1" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="200" fill="#ffffff" text-anchor="middle" >SECURITY POSTURE</text>
+    <text x="2250" y="1936.3" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="110" fill="#ff5a1f" text-anchor="middle" >how low can you go?</text>
+  
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="4500" height="5400" viewBox="0 0 4500 5400" aria-label="Business Continuity fire emblem">
+  
+  
+    <g transform="translate(2250 2500)">
+      <path d="M0,500 C-260,360 -180,80 0,-60 C120,-180 80,-360 0,-520 C60,-360 360,-200 300,80 C520,180 420,460 0,500 Z" fill="#ff5a1f"/>
+      <path d="M0,440 C-180,320 -120,120 0,0 C80,-100 60,-260 0,-400 C40,-260 280,-140 230,80 C420,160 340,400 0,440 Z" fill="#ffb020"/>
+      <path d="M0,360 C-110,260 -70,160 0,80 C50,10 40,-90 0,-180 C28,-90 190,-40 160,80 C280,140 220,320 0,360 Z" fill="#ffe14d"/>
+    </g>
+    <text x="2250" y="3460" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="150" fill="#ffffff" text-anchor="middle" letter-spacing="8">BUSINESS CONTINUITY</text>
+  
+</svg>

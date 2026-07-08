@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3000" height="3000" viewBox="0 0 3000 3000" aria-label="Coaster 4-pack">
+  
+  <circle cx="780" cy="780" r="620" fill="none" stroke="#ffffff" stroke-width="10"/>
+      <text x="780" y="809.7" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="90" fill="#ffffff" text-anchor="middle" >USE A COASTER</text>
+  <circle cx="2220" cy="780" r="620" fill="none" stroke="#ffffff" stroke-width="10"/>
+      <text x="2220" y="809.7" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="90" fill="#ffffff" text-anchor="middle" >RING OF SHAME</text>
+  <circle cx="780" cy="2220" r="620" fill="none" stroke="#ffffff" stroke-width="10"/>
+      <text x="780" y="2249.7" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="90" fill="#ffffff" text-anchor="middle" >NOT A NAPKIN</text>
+  <circle cx="2220" cy="2220" r="620" fill="none" stroke="#ffffff" stroke-width="10"/>
+      <text x="2220" y="2196.6" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="90" fill="#ffffff" text-anchor="middle" >WATER DAMAGE AS A</text>
+      <text x="2220" y="2302.8" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="90" fill="#ffffff" text-anchor="middle" >SERVICE</text>
+</svg>

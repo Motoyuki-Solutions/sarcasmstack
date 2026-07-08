@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="4500" height="5400" viewBox="0 0 4500 5400" aria-label="THE FIVE STAGES OF AN OUTAGE">
+  
+  <text x="2250" y="552.5" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="260" fill="#ff5a1f" text-anchor="middle" >THE FIVE STAGES OF AN</text>
+      <text x="2250" y="859.3" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="260" fill="#ff5a1f" text-anchor="middle" >OUTAGE</text>
+  <circle cx="900" cy="1590" r="160" fill="none" stroke="#ff5a1f" stroke-width="12"/>
+      <text x="900" y="1650" font-family="Impact, Arial Black, sans-serif" font-weight="900" font-size="200" fill="#ff5a1f" text-anchor="middle">1</text>
+      <text x="2550" y="1629.6" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="120" fill="#ffffff" text-anchor="middle" >Denial: It&apos;s probably DNS.</text>
+  <circle cx="900" cy="2370" r="160" fill="none" stroke="#ff5a1f" stroke-width="12"/>
+      <text x="900" y="2430" font-family="Impact, Arial Black, sans-serif" font-weight="900" font-size="200" fill="#ff5a1f" text-anchor="middle">2</text>
+      <text x="2550" y="2409.6" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="120" fill="#ffffff" text-anchor="middle" >Anger: WHO TOUCHED THE DNS?</text>
+  <circle cx="900" cy="3150" r="160" fill="none" stroke="#ff5a1f" stroke-width="12"/>
+      <text x="900" y="3210" font-family="Impact, Arial Black, sans-serif" font-weight="900" font-size="200" fill="#ff5a1f" text-anchor="middle">3</text>
+      <text x="2550" y="3118.8" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="120" fill="#ffffff" text-anchor="middle" >Bargaining: Maybe if I restart the</text>
+      <text x="2550" y="3260.4" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="120" fill="#ffffff" text-anchor="middle" >resolver...</text>
+  <circle cx="900" cy="3930" r="160" fill="none" stroke="#ff5a1f" stroke-width="12"/>
+      <text x="900" y="3990" font-family="Impact, Arial Black, sans-serif" font-weight="900" font-size="200" fill="#ff5a1f" text-anchor="middle">4</text>
+      <text x="2550" y="3898.8" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="120" fill="#ffffff" text-anchor="middle" >Depression: It&apos;s been 6 hours and</text>
+      <text x="2550" y="4040.4" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="120" fill="#ffffff" text-anchor="middle" >status is still green.</text>
+  <circle cx="900" cy="4710" r="160" fill="none" stroke="#ff5a1f" stroke-width="12"/>
+      <text x="900" y="4770" font-family="Impact, Arial Black, sans-serif" font-weight="900" font-size="200" fill="#ff5a1f" text-anchor="middle">5</text>
+      <text x="2550" y="4749.6" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="120" fill="#ffffff" text-anchor="middle" >Acceptance: It was DNS.</text>
+</svg>

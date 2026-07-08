@@ -2,17 +2,20 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="flex min-h-[60vh] flex-col items-center justify-center px-6 text-center">
-      <h1 className="text-8xl font-extrabold text-brand-600">404</h1>
-      <h2 className="mt-4 text-2xl font-bold">Page Not Found</h2>
-      <p className="mt-2 text-neutral-400">
-        This page is as lost as your motivation on a Monday morning.
+    <div className="mx-auto flex min-h-[60vh] max-w-2xl flex-col items-center justify-center px-4 text-center">
+      <span className="font-mono text-sm text-accent">404</span>
+      <h1 className="mt-4 font-display text-6xl tracking-tight text-white sm:text-8xl">
+        WRONG PAGE.
+      </h1>
+      <p className="mt-4 max-w-md text-zinc-400">
+        Either this page doesn&apos;t exist or it offended us. Possibly both.
+        There&apos;s only one way to find out and we&apos;re not going to.
       </p>
       <Link
-        href="/" 
-        className="mt-8 rounded-full bg-brand-600 px-8 py-3 text-sm font-semibold text-white hover:bg-brand-500 transition-colors"
+        href="/shop"
+        className="mt-8 inline-flex items-center gap-2 rounded-lg bg-accent px-8 py-4 font-display text-lg tracking-wide text-ink-950 transition-all hover:bg-accent-soft"
       >
-        Go Home
+        BACK TO THE GOODS →
       </Link>
     </div>
   );
