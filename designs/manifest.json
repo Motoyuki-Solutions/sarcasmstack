@@ -1,0 +1,237 @@
+{
+  "generated": "2026-07-07T17:05:35.962Z",
+  "shop_id": "28152719",
+  "format": "SVG source (transparent backgrounds; rasterize to PNG with alpha for Printify apparel)",
+  "fonts": [
+    "Arial",
+    "Helvetica",
+    "Impact",
+    "Arial Black"
+  ],
+  "counts": {
+    "tshirts": 26,
+    "hoodies": 6,
+    "mugs": 10,
+    "stickers": 8,
+    "posters": 3,
+    "other": 1
+  },
+  "files": [
+    {
+      "file": "out/tshirts/01-trained-replacement-front.svg",
+      "bytes": 851
+    },
+    {
+      "file": "out/tshirts/01-trained-replacement-back.svg",
+      "bytes": 1257
+    },
+    {
+      "file": "out/tshirts/02-async-update-front.svg",
+      "bytes": 811
+    },
+    {
+      "file": "out/tshirts/02-async-update-back.svg",
+      "bytes": 847
+    },
+    {
+      "file": "out/tshirts/03-mute-button-hero-front.svg",
+      "bytes": 298
+    },
+    {
+      "file": "out/tshirts/03-mute-button-hero-back.svg",
+      "bytes": 1034
+    },
+    {
+      "file": "out/tshirts/04-cve-therapy-front.svg",
+      "bytes": 829
+    },
+    {
+      "file": "out/tshirts/04-cve-therapy-back.svg",
+      "bytes": 1042
+    },
+    {
+      "file": "out/tshirts/05-cloud-bill-front.svg",
+      "bytes": 660
+    },
+    {
+      "file": "out/tshirts/05-cloud-bill-back.svg",
+      "bytes": 656
+    },
+    {
+      "file": "out/tshirts/06-my-kubernetes-front.svg",
+      "bytes": 469
+    },
+    {
+      "file": "out/tshirts/06-my-kubernetes-back.svg",
+      "bytes": 839
+    },
+    {
+      "file": "out/tshirts/07-printf-debugger-front.svg",
+      "bytes": 296
+    },
+    {
+      "file": "out/tshirts/07-printf-debugger-back.svg",
+      "bytes": 670
+    },
+    {
+      "file": "out/tshirts/08-ai-attended-meeting-front.svg",
+      "bytes": 676
+    },
+    {
+      "file": "out/tshirts/08-ai-attended-meeting-back.svg",
+      "bytes": 1028
+    },
+    {
+      "file": "out/tshirts/09-ai-took-my-job-front.svg",
+      "bytes": 483
+    },
+    {
+      "file": "out/tshirts/09-ai-took-my-job-back.svg",
+      "bytes": 1251
+    },
+    {
+      "file": "out/tshirts/10-oncall-chic-front.svg",
+      "bytes": 501
+    },
+    {
+      "file": "out/tshirts/10-oncall-chic-back.svg",
+      "bytes": 1993
+    },
+    {
+      "file": "out/tshirts/11-meeting-venn-front.svg",
+      "bytes": 1186
+    },
+    {
+      "file": "out/tshirts/11-meeting-venn-back.svg",
+      "bytes": 485
+    },
+    {
+      "file": "out/tshirts/12-patch-tuesday-front.svg",
+      "bytes": 499
+    },
+    {
+      "file": "out/tshirts/12-patch-tuesday-back.svg",
+      "bytes": 847
+    },
+    {
+      "file": "out/tshirts/13-someone-elses-computer-front.svg",
+      "bytes": 911
+    },
+    {
+      "file": "out/tshirts/13-someone-elses-computer-back.svg",
+      "bytes": 501
+    },
+    {
+      "file": "out/hoodies/14-human-in-loop-front.svg",
+      "bytes": 300
+    },
+    {
+      "file": "out/hoodies/14-human-in-loop-back.svg",
+      "bytes": 1070
+    },
+    {
+      "file": "out/hoodies/15-senior-sysadmin-front.svg",
+      "bytes": 475
+    },
+    {
+      "file": "out/hoodies/15-senior-sysadmin-back.svg",
+      "bytes": 1434
+    },
+    {
+      "file": "out/hoodies/16-business-continuity-front.svg",
+      "bytes": 798
+    },
+    {
+      "file": "out/hoodies/16-business-continuity-back.svg",
+      "bytes": 551
+    },
+    {
+      "file": "out/mugs/17-let-ai-do-it-exterior.svg",
+      "bytes": 310
+    },
+    {
+      "file": "out/mugs/17-let-ai-do-it-interior.svg",
+      "bytes": 747
+    },
+    {
+      "file": "out/mugs/18-circle-back-exterior.svg",
+      "bytes": 310
+    },
+    {
+      "file": "out/mugs/18-circle-back-interior.svg",
+      "bytes": 497
+    },
+    {
+      "file": "out/mugs/19-zero-trust-zero-sleep.svg",
+      "bytes": 687
+    },
+    {
+      "file": "out/mugs/20-read-the-error.svg",
+      "bytes": 895
+    },
+    {
+      "file": "out/mugs/21-production-incident.svg",
+      "bytes": 698
+    },
+    {
+      "file": "out/mugs/22-security-posture.svg",
+      "bytes": 1176
+    },
+    {
+      "file": "out/mugs/23-hiring-update-exterior.svg",
+      "bytes": 324
+    },
+    {
+      "file": "out/mugs/23-hiring-update-interior.svg",
+      "bytes": 324
+    },
+    {
+      "file": "out/stickers/24-other-car-cve.svg",
+      "bytes": 1007
+    },
+    {
+      "file": "out/stickers/25-debugging-career.svg",
+      "bytes": 1340
+    },
+    {
+      "file": "out/stickers/26-oncall-rotation.svg",
+      "bytes": 829
+    },
+    {
+      "file": "out/stickers/27-kubernetes-mortgage.svg",
+      "bytes": 1015
+    },
+    {
+      "file": "out/stickers/28-rto-rtfm.svg",
+      "bytes": 1196
+    },
+    {
+      "file": "out/stickers/29-zero-trust-intern.svg",
+      "bytes": 831
+    },
+    {
+      "file": "out/stickers/30-organizational-knowledge.svg",
+      "bytes": 1364
+    },
+    {
+      "file": "out/stickers/31-ai-survivor-kit.svg",
+      "bytes": 3851
+    },
+    {
+      "file": "out/posters/32-five-stages-debugging.svg",
+      "bytes": 2776
+    },
+    {
+      "file": "out/posters/33-five-stages-outage.svg",
+      "bytes": 2937
+    },
+    {
+      "file": "out/posters/34-cloud-journey.svg",
+      "bytes": 4631
+    },
+    {
+      "file": "out/other/35-coaster-set.svg",
+      "bytes": 1297
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="4500" height="5400" viewBox="0 0 4500 5400" aria-label="The Cloud Journey">
+  
+  
+    <defs><marker id="arrow" markerWidth="20" markerHeight="20" refX="10" refY="10" orient="auto"><path d="M0,0 L20,10 L0,20 Z" fill="#ff5a1f"/></marker></defs>
+    <circle cx="2250" cy="700" r="300" fill="none" stroke="#ffffff" stroke-width="10"/>
+      <text x="2250" y="681.8" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="70" fill="#ffffff" text-anchor="middle" >On-prem is</text>
+      <text x="2250" y="764.4" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="70" fill="#ffffff" text-anchor="middle" >expensive</text>
+      <path d="M 3330.7253985993875 1086.186070607687 A 1860 1860 0 0 1 3558.099719712763 1277.7008192971641" fill="none" stroke="#ff5a1f" stroke-width="10" marker-end="url(#arrow)"/>
+  <circle cx="3735" cy="1415" r="300" fill="none" stroke="#ffffff" stroke-width="10"/>
+      <text x="3735.479816689257" y="1397.2" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="70" fill="#ffffff" text-anchor="middle" >Let&apos;s move</text>
+      <text x="3735.479816689257" y="1479.8" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="70" fill="#ffffff" text-anchor="middle" >to the cloud</text>
+      <path d="M 4107.368653233978 2501.0975936400073 A 1860 1860 0 0 1 4099.401963770335 2798.273488904667" fill="none" stroke="#ff5a1f" stroke-width="10" marker-end="url(#arrow)"/>
+  <circle cx="4102" cy="3023" r="300" fill="none" stroke="#ffffff" stroke-width="10"/>
+      <text x="4102.363033145465" y="3004.6" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="70" fill="#ffffff" text-anchor="middle" >The cloud is</text>
+      <text x="4102.363033145465" y="3087.2" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="70" fill="#ffffff" text-anchor="middle" >expensive</text>
+      <path d="M 3485.3754285675645 3990.484645902826 A 1860 1860 0 0 1 3248.0668081838744 4169.542177324857" fill="none" stroke="#ff5a1f" stroke-width="10" marker-end="url(#arrow)"/>
+  <circle cx="3074" cy="4312" r="300" fill="none" stroke="#ffffff" stroke-width="10"/>
+      <text x="3074.3791043233605" y="4293.7" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="70" fill="#ffffff" text-anchor="middle" >Let&apos;s do</text>
+      <text x="3074.3791043233605" y="4376.3" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="70" fill="#ffffff" text-anchor="middle" >hybrid</text>
+      <path d="M 1933.119309123499 4432.80839908312 A 1860 1860 0 0 1 1645.1669891823503 4358.913593393734" fill="none" stroke="#ff5a1f" stroke-width="10" marker-end="url(#arrow)"/>
+  <circle cx="1426" cy="4312" r="300" fill="none" stroke="#ffffff" stroke-width="10"/>
+      <text x="1425.6208956766395" y="4293.7" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="70" fill="#ffffff" text-anchor="middle" >Hybrid is</text>
+      <text x="1425.6208956766395" y="4376.3" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="70" fill="#ffffff" text-anchor="middle" >expensive</text>
+      <path d="M 619.4808130975393 3494.9900452758893 A 1860 1860 0 0 1 497.71876367149 3223.7871983385267" fill="none" stroke="#ff5a1f" stroke-width="10" marker-end="url(#arrow)"/>
+  <circle cx="398" cy="3023" r="300" fill="none" stroke="#ffffff" stroke-width="10"/>
+      <text x="397.6369668545351" y="3004.6" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="70" fill="#ffffff" text-anchor="middle" >Let&apos;s move</text>
+      <text x="397.6369668545351" y="3087.2" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="70" fill="#ffffff" text-anchor="middle" >back on-prem</text>
+      <path d="M 533.6565213391439 1883.2259329060857 A 1860 1860 0 0 1 669.7740491391712 1618.9363199944717" fill="none" stroke="#ff5a1f" stroke-width="10" marker-end="url(#arrow)"/>
+  <circle cx="765" cy="1415" r="300" fill="none" stroke="#ffffff" stroke-width="10"/>
+      <text x="764.520183310743" y="1397.2" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="70" fill="#ffffff" text-anchor="middle" >On-prem is</text>
+      <text x="764.520183310743" y="1479.8" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="70" fill="#ffffff" text-anchor="middle" >expensive</text>
+      
+    <text x="2250" y="5086.1" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="200" fill="#ff5a1f" text-anchor="middle" >THE CLOUD JOURNEY</text>
+  
+</svg>
